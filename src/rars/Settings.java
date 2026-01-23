@@ -1005,7 +1005,11 @@ public class Settings extends Observable {
         public LookAndFeelColor(String key) {this.key = key; }
         public Color getColor() {
             // Deep copy, because using the color directly in UI caused problems
-            return new Color(UIManager.getLookAndFeel().getDefaults().getColor(key).getRGB());
+            Color c = UIManager.getLookAndFeel().getDefaults().getColor(key);
+            if (c == null) {
+                c = Color.black;
+            }
+            return new Color(c.getRGB());
         }
     }
 

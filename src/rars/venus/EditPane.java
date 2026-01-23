@@ -84,7 +84,6 @@ public class EditPane extends JPanel implements Observer {
         Globals.getSettings().addObserver(this);
         this.fileStatus = new FileStatus();
         lineNumbers = new JLabel();
-
         if (Globals.getSettings().getBooleanSetting(Settings.Bool.GENERIC_TEXT_EDITOR)) {
             this.sourceCode = new GenericTextArea(this, lineNumbers);
         } else {

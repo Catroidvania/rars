@@ -64,9 +64,9 @@ public class MainPane extends JTabbedPane {
         this.mainUI = appFrame;
 
         this.setTabPlacement(JTabbedPane.TOP); //LEFT);
-        if (this.getUI() instanceof BasicTabbedPaneUI) {
+        /*if (this.getUI() instanceof BasicTabbedPaneUI) {
             BasicTabbedPaneUI ui = (BasicTabbedPaneUI) this.getUI();
-        }
+        }*/
         editTabbedPane = new EditTabbedPane(appFrame, editor, this);
         executeTab = new ExecutePane(appFrame, regs, cop1Regs, cop0Regs);
         String editTabTitle = "Edit";
@@ -74,7 +74,7 @@ public class MainPane extends JTabbedPane {
         Icon editTabIcon = null;//new ImageIcon(Toolkit.getDefaultToolkit().getImage(this.getClass().getResource(Globals.imagesPath+"Edit_tab.jpg")));
         Icon executeTabIcon = null;//new ImageIcon(Toolkit.getDefaultToolkit().getImage(this.getClass().getResource(Globals.imagesPath+"Execute_tab.jpg")));
 
-        this.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+        //this.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
         this.addTab(editTabTitle, editTabIcon, editTabbedPane);
         this.setForeground(Color.black);
 

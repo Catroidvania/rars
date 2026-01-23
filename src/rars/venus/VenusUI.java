@@ -123,6 +123,18 @@ public class VenusUI extends JFrame {
 
     public VenusUI(String name, ArrayList<String> paths) {
         super(name);
+
+        try {
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            //
+        }
+
         mainUI = this;
         Globals.setGui(this);
         this.editor = new Editor(this);
@@ -174,20 +186,23 @@ public class VenusUI extends JFrame {
         csrTab = new ControlAndStatusWindow();
         registersPane = new RegistersPane(mainUI, registersTab, fpTab, csrTab);
         registersPane.setPreferredSize(registersPanePreferredSize);
+        registersPane.setBorder(BorderFactory.createLoweredSoftBevelBorder());
 
         //Insets defaultTabInsets = (Insets)UIManager.get("TabbedPane.tabInsets");
         //UIManager.put("TabbedPane.tabInsets", new Insets(1, 1, 1, 1));
         mainPane = new MainPane(mainUI, editor, registersTab, fpTab, csrTab);
         //UIManager.put("TabbedPane.tabInsets", defaultTabInsets);
 
-  
 
         mainPane.setPreferredSize(mainPanePreferredSize);
         messagesPane = new MessagesPane();
         messagesPane.setPreferredSize(messagesPanePreferredSize);
+        messagesPane.setBorder(BorderFactory.createLoweredSoftBevelBorder());
+
         splitter = new JSplitPane(JSplitPane.VERTICAL_SPLIT, mainPane, messagesPane);
         splitter.setOneTouchExpandable(true);
         splitter.resetToPreferredSizes();
+
         horizonSplitter = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, splitter, registersPane);
         horizonSplitter.setOneTouchExpandable(true);
         horizonSplitter.resetToPreferredSizes();
@@ -196,16 +211,20 @@ public class VenusUI extends JFrame {
         this.createActionObjects();
         menu = this.setUpMenuBar();
         this.setJMenuBar(menu);
+        this.getRootPane().setBorder(BorderFactory.createRaisedSoftBevelBorder());
 
         toolbar = this.setUpToolBar();
 
+        this.getMainPane().setBorder(BorderFactory.createLoweredSoftBevelBorder());
+
         JPanel jp = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        toolbar.add(RunSpeedPanel.getInstance());
         jp.add(toolbar);
-        jp.add(RunSpeedPanel.getInstance());
+        //jp.add(RunSpeedPanel.getInstance());
+
         JPanel center = new JPanel(new BorderLayout());
         center.add(jp, BorderLayout.NORTH);
         center.add(horizonSplitter);
-
 
         this.getContentPane().add(center);
 
@@ -699,6 +718,7 @@ public class VenusUI extends JFrame {
 
     JToolBar setUpToolBar() {
         JToolBar toolBar = new JToolBar();
+        toolBar.setFloatable(false);
 
         New = new JButton(fileNewAction);
         New.setText("");
