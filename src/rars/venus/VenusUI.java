@@ -15,8 +15,11 @@ import rars.venus.settings.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Properties;
 
 /*
 Copyright (c) 2003-2013,  Pete Sanderson and Kenneth Vollmar
@@ -86,7 +89,7 @@ public class VenusUI extends JFrame {
     private JCheckBoxMenuItem settingsLabel, settingsPopupInput, settingsValueDisplayBase, settingsAddressDisplayBase,
             settingsExtended, settingsAssembleOnOpen, settingsAssembleAll, settingsAssembleOpen, settingsWarningsAreErrors,
             settingsStartAtMain, settingsProgramArguments, settingsSelfModifyingCode, settingsRV64, settingsDeriveCurrentWorkingDirectory;
-    private JMenuItem settingsExceptionHandler, settingsEditor, settingsHighlighting, settingsMemoryConfiguration;
+    private JMenuItem settingsExceptionHandler, settingsEditor, settingsHighlighting, settingsMemoryConfiguration, settingsAppearance;
     private JMenuItem helpHelp, helpAbout;
 
     // components of the toolbar
@@ -110,7 +113,7 @@ public class VenusUI extends JFrame {
             settingsExtendedAction, settingsAssembleOnOpenAction, settingsAssembleOpenAction, settingsAssembleAllAction,
             settingsWarningsAreErrorsAction, settingsStartAtMainAction, settingsProgramArgumentsAction,
             settingsExceptionHandlerAction, settingsEditorAction, settingsHighlightingAction, settingsMemoryConfigurationAction,
-            settingsSelfModifyingCodeAction, settingsRV64Action, settingsDeriveCurrentWorkingDirectoryAction;
+            settingsSelfModifyingCodeAction, settingsRV64Action, settingsDeriveCurrentWorkingDirectoryAction, settingsAppearanceAction;
     private Action helpHelpAction, helpAboutAction;
 
 
@@ -125,14 +128,20 @@ public class VenusUI extends JFrame {
         super(name);
 
         try {
-            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    UIManager.setLookAndFeel(info.getClassName());
-                    break;
+            InputStream is = new FileInputStream(Globals.getSettings().getThemePropertiesFile());
+            SettingsAppearanceAction.setTheme(is);
+        } catch (Exception ex) {
+            System.err.println("Could not open theme properties file: " + ex.getMessage());
+            try {
+                for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                    if ("Nimbus".equals(info.getName())) {
+                        UIManager.setLookAndFeel(info.getClassName());
+                        break;
+                    }
                 }
+            } catch (Exception ex2) {
+                System.err.println("Unable to load Nimbus: " + ex2.getMessage());
             }
-        } catch (Exception e) {
-            //
         }
 
         mainUI = this;
@@ -202,6 +211,13 @@ public class VenusUI extends JFrame {
         splitter = new JSplitPane(JSplitPane.VERTICAL_SPLIT, mainPane, messagesPane);
         splitter.setOneTouchExpandable(true);
         splitter.resetToPreferredSizes();
+/*
+        JLabel test = new JLabel(new ImageIcon(this.getClass().getResource(Globals.imagesPath + "RISC-V.png")));
+        JSplitPane split2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, registersPane, test);
+        split2.setEnabled(false);
+        split2.resetToPreferredSizes();
+
+ */
 
         horizonSplitter = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, splitter, registersPane);
         horizonSplitter.setOneTouchExpandable(true);
@@ -511,6 +527,8 @@ public class VenusUI extends JFrame {
                     null, "View and modify memory segment base addresses for the simulated processor",
                     null, null
             );
+            settingsAppearanceAction = new SettingsAppearanceAction("Appearance...",
+                    null, "Change the theme.", null, null);
 
             helpHelpAction = new HelpHelpAction("Help", loadIcon("Help22.png"),
                     "Help", KeyEvent.VK_H, KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), mainUI);
@@ -667,6 +685,8 @@ public class VenusUI extends JFrame {
         settingsExceptionHandler = new JMenuItem(settingsExceptionHandlerAction);
         settingsMemoryConfiguration = new JMenuItem(settingsMemoryConfigurationAction);
 
+        settingsAppearance = new JMenuItem(settingsAppearanceAction);
+
         settings.add(settingsLabel);
         settings.add(settingsProgramArguments);
         settings.add(settingsPopupInput);
@@ -688,6 +708,7 @@ public class VenusUI extends JFrame {
         settings.add(settingsHighlighting);
         settings.add(settingsExceptionHandler);
         settings.add(settingsMemoryConfiguration);
+        settings.add(settingsAppearance);
 
         helpHelp = new JMenuItem(helpHelpAction);
         helpHelp.setIcon(loadIcon("Help16.png"));//"Help16.gif"));
@@ -857,6 +878,7 @@ public class VenusUI extends JFrame {
         editFindReplaceAction.setEnabled(false);
         editSelectAllAction.setEnabled(false);
         settingsMemoryConfigurationAction.setEnabled(true); // added 21 July 2009
+        settingsAppearanceAction.setEnabled(true);
         runAssembleAction.setEnabled(false);
         runGoAction.setEnabled(false);
         runStepAction.setEnabled(false);
@@ -927,6 +949,7 @@ public class VenusUI extends JFrame {
         editFindReplaceAction.setEnabled(true);
         editSelectAllAction.setEnabled(true);
         settingsMemoryConfigurationAction.setEnabled(true); // added 21 July 2009
+        settingsAppearanceAction.setEnabled(true);
         runAssembleAction.setEnabled(true);
         runGoAction.setEnabled(false);
         runStepAction.setEnabled(false);
@@ -960,6 +983,7 @@ public class VenusUI extends JFrame {
         editFindReplaceAction.setEnabled(true);
         editSelectAllAction.setEnabled(true);
         settingsMemoryConfigurationAction.setEnabled(true); // added 21 July 2009
+        settingsAppearanceAction.setEnabled(true);
         runAssembleAction.setEnabled(false);
         runGoAction.setEnabled(false);
         runStepAction.setEnabled(false);
@@ -993,6 +1017,7 @@ public class VenusUI extends JFrame {
         editFindReplaceAction.setEnabled(true);
         editSelectAllAction.setEnabled(true);
         settingsMemoryConfigurationAction.setEnabled(true); // added 21 July 2009
+        settingsAppearanceAction.setEnabled(true);
         runAssembleAction.setEnabled(true);
         runGoAction.setEnabled(true);
         runStepAction.setEnabled(true);
@@ -1026,6 +1051,7 @@ public class VenusUI extends JFrame {
         editFindReplaceAction.setEnabled(false);
         editSelectAllAction.setEnabled(false);
         settingsMemoryConfigurationAction.setEnabled(false); // added 21 July 2009
+        settingsAppearanceAction.setEnabled(false);
         runAssembleAction.setEnabled(false);
         runGoAction.setEnabled(false);
         runStepAction.setEnabled(false);
@@ -1059,6 +1085,7 @@ public class VenusUI extends JFrame {
         editFindReplaceAction.setEnabled(true);
         editSelectAllAction.setEnabled(true);
         settingsMemoryConfigurationAction.setEnabled(true); // added 21 July 2009
+        settingsAppearanceAction.setEnabled(true);
         runAssembleAction.setEnabled(true);
         runGoAction.setEnabled(false);
         runStepAction.setEnabled(false);

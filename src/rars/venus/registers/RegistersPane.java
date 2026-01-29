@@ -63,6 +63,7 @@ public class RegistersPane extends JTabbedPane {
         fpTab.setVisible(true);
         csrTab.setVisible(true);
 
+
         this.addTab("Registers", regsTab);
         this.addTab("Floating Point", fpTab);
         this.addTab("Control and Status", csrTab);
