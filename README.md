@@ -53,6 +53,10 @@ Secondary3
 
 you should be able to change everything with these 8 properties, but you can also see every [supported property](src/rars/venus/CustomMetalTheme.java) here
 
+## known issues
+
+- open files do not update appearance when theme changes, i think this is because their appearance is handled seperately by RARS already
+
 ----------------------------------------------
 
 RARS, the RISC-V Assembler, Simulator, and Runtime, will assemble and simulate

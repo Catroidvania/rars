@@ -1,5 +1,8 @@
 package rars.venus;
 
+import rars.Globals;
+import rars.venus.editors.jeditsyntax.SyntaxUtilities;
+
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.metal.DefaultMetalTheme;
 import java.util.HashMap;
@@ -23,12 +26,39 @@ public class CustomMetalTheme extends DefaultMetalTheme {
                 }
                 try {
                     this.palette.put(entry.getKey().toString(), new ColorUIResource(Integer.decode(entry.getValue().toString())));
+                    Globals.getSettings().getPreferences().put(entry.getKey().toString(), entry.getValue().toString());
+                    Globals.getSettings().getPreferences().flush();
                     //System.out.println(entry.getKey().toString() + ":" + entry.getValue().toString());
                 } catch (Exception e) {
                     // ignore
                 }
             }
         }
+    }
+
+    public void updateEditorHighlights() {
+        /*
+        // these things
+        "EvenRowBackground", "EvenRowForeground", "OddRowBackground", "OddRowForeground",
+            "TextSegmentHighlightBackground", "TextSegmentHighlightForeground",
+            "TextSegmentDelaySlotHighlightBackground", "TextSegmentDelaySlotHighlightForeground",
+            "DataSegmentHighlightBackground", "DataSegmentHighlightForeground",
+            "RegisterHighlightBackground", "RegisterHighlightForeground",
+            "EditorBackground", "EditorForeground", "EditorLineHighlight", "EditorSelection", "EditorCaretColor"
+         */
+        for (Map.Entry<String, ColorUIResource> entry : palette.entrySet()) {
+            if (Globals.getSettings().getColorSettingByKey(entry.getKey()) != null) {
+                Globals.getSettings().setColorSettingByKey(entry.getKey(), entry.getValue());
+            }
+        }
+
+        /*
+        int styles = SyntaxUtilities.getDefaultSyntaxStyles().length;
+        for (int i = 0; i < styles; i++) {
+            Globals.getSettings().saveEditorSyntaxStyle(i);
+        }
+        */
+        //Globals.getSettings().getSettingsFromPreferences();
     }
 
     private void initDefaults() {

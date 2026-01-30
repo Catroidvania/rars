@@ -43,8 +43,10 @@ public class SettingsAppearanceAction extends GuiAction {
         try {
             Properties theme = new Properties();
             theme.load(is);
-            MetalLookAndFeel.setCurrentTheme(new CustomMetalTheme(theme));
+            CustomMetalTheme cmt = new CustomMetalTheme(theme);
+            MetalLookAndFeel.setCurrentTheme(cmt);
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+            cmt.updateEditorHighlights();
             SwingUtilities.updateComponentTreeUI(Globals.getGui());
             return true;
         } catch (Exception ex) {

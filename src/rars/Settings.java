@@ -490,7 +490,7 @@ public class Settings extends Observable {
                 defaultSyntaxStyleBoldSettingsValues[index]);
     }
 
-    private void saveEditorSyntaxStyle(int index) {
+    public void saveEditorSyntaxStyle(int index) {
         try {
             preferences.put(syntaxStyleColorSettingsKeys[index], syntaxStyleColorSettingsValues[index]);
             preferences.putBoolean(syntaxStyleBoldSettingsKeys[index], syntaxStyleBoldSettingsValues[index]);
@@ -1225,7 +1225,7 @@ public class Settings extends Observable {
     //
     // PRECONDITION: Values arrays have already been initialized to default values from
     // Settings.properties file or default value arrays above!
-    private void getSettingsFromPreferences() {
+    public void getSettingsFromPreferences() {
         for (Bool setting : booleanSettingsValues.keySet()) {
             booleanSettingsValues.put(setting, preferences.getBoolean(setting.getName(), booleanSettingsValues.get(setting)));
         }
@@ -1295,6 +1295,9 @@ public class Settings extends Observable {
         }
     }
 
+    public Preferences getPreferences() {
+        return preferences;
+    }
 
     /*
      *  Private helper to do the work of converting a string containing Text
