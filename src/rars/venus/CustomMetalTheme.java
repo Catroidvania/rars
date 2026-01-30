@@ -23,7 +23,7 @@ public class CustomMetalTheme extends DefaultMetalTheme {
                 }
                 try {
                     this.palette.put(entry.getKey().toString(), new ColorUIResource(Integer.decode(entry.getValue().toString())));
-                    System.out.println(entry.getKey().toString() + ":" + entry.getValue().toString());
+                    //System.out.println(entry.getKey().toString() + ":" + entry.getValue().toString());
                 } catch (Exception e) {
                     // ignore
                 }

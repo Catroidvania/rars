@@ -1,6 +1,60 @@
 RARS -- RISC-V Assembler and Runtime Simulator
 ----------------------------------------------
 
+its RARS but you can change the colour
+
+## why?
+
+looks nice
+
+## how?
+
+make a java .properties file with colours keys, use the [example dark theme](/themes/basicDark.properties) as a base
+
+to change the theme go to settings -> appearance -> select your .properties file
+
+## color region guide
+
+Defaults
+
+![screenshot of rars](/images/default.png)
+
+White
+
+![screenshot of rars](/images/white.png)
+
+Black
+
+![screenshot of rars](/images/black.png)
+
+Primary1
+
+![screenshot of rars](/images/Primary1.png)
+
+Primary2
+
+![screenshot of rars](/images/Primary2.png)
+
+Primary3
+
+![screenshot of rars](/images/Primary3.png)
+
+Secondary1
+
+![screenshot of rars](/images/Secondary1.png)
+
+Secondary2
+
+![screenshot of rars](/images/Secondary2.png)
+
+Secondary3
+
+![screenshot of rars](/images/Secondary3.png)
+
+you should be able to change everything with these 8 properties, but you can also see every [supported property](src/rars/venus/CustomMetalTheme.java) here
+
+----------------------------------------------
+
 RARS, the RISC-V Assembler, Simulator, and Runtime, will assemble and simulate
 the execution of RISC-V assembly language programs. Its primary goal is to be
 an effective development environment for people getting started with RISC-V. 
