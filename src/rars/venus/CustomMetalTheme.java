@@ -2,7 +2,6 @@ package rars.venus;
 
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.metal.DefaultMetalTheme;
-import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -17,13 +16,14 @@ public class CustomMetalTheme extends DefaultMetalTheme {
         this.palette = new HashMap<>();
         initDefaults();
 
-        if (props != null) {
+        if (props != null && !props.isEmpty()) {
             for (Map.Entry<Object, Object> entry : props.entrySet()) {
                 if (entry.getKey().toString().equals("Name")) {
                     this.name = entry.getValue().toString();
                 }
                 try {
                     this.palette.put(entry.getKey().toString(), new ColorUIResource(Integer.decode(entry.getValue().toString())));
+                    System.out.println(entry.getKey().toString() + ":" + entry.getValue().toString());
                 } catch (Exception e) {
                     // ignore
                 }
@@ -33,7 +33,6 @@ public class CustomMetalTheme extends DefaultMetalTheme {
 
     private void initDefaults() {
         // metal defaults
-        /*
         this.name = "Steel";
         this.palette.put("Primary1", new ColorUIResource(0x666699));
         this.palette.put("Primary2", new ColorUIResource(0x9999cc));
@@ -43,9 +42,9 @@ public class CustomMetalTheme extends DefaultMetalTheme {
         this.palette.put("Secondary3", new ColorUIResource(0xcccccc));
         this.palette.put("White", new ColorUIResource(0xFFFFFF));
         this.palette.put("Black", new ColorUIResource(0x000000));
-         */
 
         // ocean theme defaults
+        /*
         this.name = "Ocean";
         this.palette.put("Primary1", new ColorUIResource(0x6382BF));
         this.palette.put("Primary2", new ColorUIResource(0xA3B8CC));
@@ -59,6 +58,7 @@ public class CustomMetalTheme extends DefaultMetalTheme {
         this.palette.put("InactiveControlTextColor", new ColorUIResource(0x999999));
         this.palette.put("ControlTextColor", new ColorUIResource(0x333333));
         this.palette.put("MenuDisabledForeground", new ColorUIResource(0x999999));
+         */
     }
 
     @Override
@@ -263,7 +263,7 @@ public class CustomMetalTheme extends DefaultMetalTheme {
 
     @Override
     public ColorUIResource getSeparatorForeground() {
-        return this.palette.getOrDefault("SeparatorForeground", this.getPrimary2());
+        return this.palette.getOrDefault("SeparatorForeground", this.getPrimary1());
     }
 
     @Override

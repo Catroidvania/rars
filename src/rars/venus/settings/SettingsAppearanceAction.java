@@ -1,10 +1,12 @@
 package rars.venus.settings;
 
 import rars.Globals;
+import rars.venus.CustomMetalTheme;
 import rars.venus.GuiAction;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.plaf.metal.MetalLookAndFeel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -22,8 +24,8 @@ public class SettingsAppearanceAction extends GuiAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        JFileChooser chooser = new JFileChooser();
-        chooser.setFileFilter(new FileNameExtensionFilter(".properties", "properties"));
+        JFileChooser chooser = new JFileChooser(Globals.getGui().getEditor().getCurrentOpenDirectory());
+        chooser.setFileFilter(new FileNameExtensionFilter("Java property files", "properties"));
         if (chooser.showOpenDialog(Globals.getGui()) == JFileChooser.APPROVE_OPTION) {
             String fp = chooser.getSelectedFile().getAbsolutePath();
             try {
@@ -41,19 +43,8 @@ public class SettingsAppearanceAction extends GuiAction {
         try {
             Properties theme = new Properties();
             theme.load(is);
-            for (String key : theme.stringPropertyNames()) {
-                try {
-                    UIManager.put(key, Color.decode(theme.getProperty(key)));
-                } catch (Exception ex) {
-                    System.err.println("Not a colour: " + ex.getMessage());
-                }
-            }
-            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
+            MetalLookAndFeel.setCurrentTheme(new CustomMetalTheme(theme));
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
             SwingUtilities.updateComponentTreeUI(Globals.getGui());
             return true;
         } catch (Exception ex) {

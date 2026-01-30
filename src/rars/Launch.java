@@ -1,26 +1,24 @@
 package rars;
 
+import rars.api.Options;
 import rars.api.Program;
 import rars.riscv.InstructionSet;
 import rars.riscv.dump.DumpFormat;
 import rars.riscv.dump.DumpFormatLoader;
 import rars.riscv.hardware.*;
-import rars.simulator.ProgramArgumentList;
 import rars.simulator.Simulator;
 import rars.util.Binary;
 import rars.util.FilenameFinder;
 import rars.util.MemoryDump;
-import rars.venus.CustomMetalTheme;
 import rars.venus.VenusUI;
-import rars.api.Options;
 
 import javax.swing.*;
-import javax.swing.plaf.ColorUIResource;
-import javax.swing.plaf.metal.MetalLookAndFeel;
-import javax.swing.plaf.metal.MetalTheme;
-import java.awt.*;
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /*
 Copyright (c) 2003-2012,  Pete Sanderson and Kenneth Vollmar
@@ -179,6 +177,7 @@ public class Launch {
             }
             */
 
+            /*
             try {
                 CustomMetalTheme cmt = new CustomMetalTheme(null);
                 MetalLookAndFeel.setCurrentTheme(cmt);
@@ -186,6 +185,7 @@ public class Launch {
             } catch (Exception e) {
                 System.err.println(e.getMessage());
             }
+             */
 
             launchIDE();
         } else { // running from command line.

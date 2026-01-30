@@ -15,6 +15,8 @@ import rars.venus.settings.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -86,7 +88,7 @@ public class VenusUI extends JFrame {
     private JCheckBoxMenuItem settingsLabel, settingsPopupInput, settingsValueDisplayBase, settingsAddressDisplayBase,
             settingsExtended, settingsAssembleOnOpen, settingsAssembleAll, settingsAssembleOpen, settingsWarningsAreErrors,
             settingsStartAtMain, settingsProgramArguments, settingsSelfModifyingCode, settingsRV64, settingsDeriveCurrentWorkingDirectory;
-    private JMenuItem settingsExceptionHandler, settingsEditor, settingsHighlighting, settingsMemoryConfiguration;
+    private JMenuItem settingsExceptionHandler, settingsEditor, settingsHighlighting, settingsMemoryConfiguration, settingsAppearance;
     private JMenuItem helpHelp, helpAbout;
 
     // components of the toolbar
@@ -110,7 +112,7 @@ public class VenusUI extends JFrame {
             settingsExtendedAction, settingsAssembleOnOpenAction, settingsAssembleOpenAction, settingsAssembleAllAction,
             settingsWarningsAreErrorsAction, settingsStartAtMainAction, settingsProgramArgumentsAction,
             settingsExceptionHandlerAction, settingsEditorAction, settingsHighlightingAction, settingsMemoryConfigurationAction,
-            settingsSelfModifyingCodeAction, settingsRV64Action, settingsDeriveCurrentWorkingDirectoryAction;
+            settingsSelfModifyingCodeAction, settingsRV64Action, settingsDeriveCurrentWorkingDirectoryAction, settingsAppearanceAction;
     private Action helpHelpAction, helpAboutAction;
 
 
@@ -180,7 +182,7 @@ public class VenusUI extends JFrame {
         mainPane = new MainPane(mainUI, editor, registersTab, fpTab, csrTab);
         //UIManager.put("TabbedPane.tabInsets", defaultTabInsets);
 
-  
+
 
         mainPane.setPreferredSize(mainPanePreferredSize);
         messagesPane = new MessagesPane();
@@ -237,6 +239,15 @@ public class VenusUI extends JFrame {
         // situation where user Cancels out of "save edits?" dialog.  By default,
         // the GUI frame will be hidden but I want it to do nothing.
         this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+
+        if (!Globals.getSettings().getThemePropertiesFile().isEmpty()) {
+            try {
+                InputStream is = new FileInputStream(Globals.getSettings().getThemePropertiesFile());
+                SettingsAppearanceAction.setTheme(is);
+            } catch (Exception ex) {
+                System.err.println("Could not open theme properties file: " + ex.getMessage());
+            }
+        }
 
         this.pack();
         this.setVisible(true);
@@ -493,6 +504,9 @@ public class VenusUI extends JFrame {
                     null, null
             );
 
+            settingsAppearanceAction = new SettingsAppearanceAction("Appearance...",
+                    null, "Change the theme.", null, null);
+
             helpHelpAction = new HelpHelpAction("Help", loadIcon("Help22.png"),
                     "Help", KeyEvent.VK_H, KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), mainUI);
             helpAboutAction = new HelpAboutAction("About ...", null,
@@ -647,6 +661,7 @@ public class VenusUI extends JFrame {
         settingsHighlighting = new JMenuItem(settingsHighlightingAction);
         settingsExceptionHandler = new JMenuItem(settingsExceptionHandlerAction);
         settingsMemoryConfiguration = new JMenuItem(settingsMemoryConfigurationAction);
+        settingsAppearance = new JMenuItem(settingsAppearanceAction);
 
         settings.add(settingsLabel);
         settings.add(settingsProgramArguments);
@@ -665,6 +680,7 @@ public class VenusUI extends JFrame {
         settings.add(settingsSelfModifyingCode);
         settings.add(settingsRV64);
         settings.addSeparator();
+        settings.add(settingsAppearance);
         settings.add(settingsEditor);
         settings.add(settingsHighlighting);
         settings.add(settingsExceptionHandler);
@@ -837,6 +853,7 @@ public class VenusUI extends JFrame {
         editFindReplaceAction.setEnabled(false);
         editSelectAllAction.setEnabled(false);
         settingsMemoryConfigurationAction.setEnabled(true); // added 21 July 2009
+        settingsAppearanceAction.setEnabled(true);
         runAssembleAction.setEnabled(false);
         runGoAction.setEnabled(false);
         runStepAction.setEnabled(false);
@@ -871,6 +888,7 @@ public class VenusUI extends JFrame {
         editFindReplaceAction.setEnabled(true);
         editSelectAllAction.setEnabled(true);
         settingsMemoryConfigurationAction.setEnabled(true);
+        settingsAppearanceAction.setEnabled(true);
         runAssembleAction.setEnabled(true);
         // If assemble-all, allow previous Run menu settings to remain.
         // Otherwise, clear them out.  DPS 9-Aug-2011
@@ -907,6 +925,7 @@ public class VenusUI extends JFrame {
         editFindReplaceAction.setEnabled(true);
         editSelectAllAction.setEnabled(true);
         settingsMemoryConfigurationAction.setEnabled(true); // added 21 July 2009
+        settingsAppearanceAction.setEnabled(true);
         runAssembleAction.setEnabled(true);
         runGoAction.setEnabled(false);
         runStepAction.setEnabled(false);
@@ -940,6 +959,7 @@ public class VenusUI extends JFrame {
         editFindReplaceAction.setEnabled(true);
         editSelectAllAction.setEnabled(true);
         settingsMemoryConfigurationAction.setEnabled(true); // added 21 July 2009
+        settingsAppearanceAction.setEnabled(true);
         runAssembleAction.setEnabled(false);
         runGoAction.setEnabled(false);
         runStepAction.setEnabled(false);
@@ -973,6 +993,7 @@ public class VenusUI extends JFrame {
         editFindReplaceAction.setEnabled(true);
         editSelectAllAction.setEnabled(true);
         settingsMemoryConfigurationAction.setEnabled(true); // added 21 July 2009
+        settingsAppearanceAction.setEnabled(true);
         runAssembleAction.setEnabled(true);
         runGoAction.setEnabled(true);
         runStepAction.setEnabled(true);
@@ -1006,6 +1027,7 @@ public class VenusUI extends JFrame {
         editFindReplaceAction.setEnabled(false);
         editSelectAllAction.setEnabled(false);
         settingsMemoryConfigurationAction.setEnabled(false); // added 21 July 2009
+        settingsAppearanceAction.setEnabled(true);
         runAssembleAction.setEnabled(false);
         runGoAction.setEnabled(false);
         runStepAction.setEnabled(false);
@@ -1039,6 +1061,7 @@ public class VenusUI extends JFrame {
         editFindReplaceAction.setEnabled(true);
         editSelectAllAction.setEnabled(true);
         settingsMemoryConfigurationAction.setEnabled(true); // added 21 July 2009
+        settingsAppearanceAction.setEnabled(true);
         runAssembleAction.setEnabled(true);
         runGoAction.setEnabled(false);
         runStepAction.setEnabled(false);
