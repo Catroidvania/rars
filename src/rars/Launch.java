@@ -10,11 +10,14 @@ import rars.simulator.Simulator;
 import rars.util.Binary;
 import rars.util.FilenameFinder;
 import rars.util.MemoryDump;
+import rars.venus.CustomMetalTheme;
 import rars.venus.VenusUI;
 import rars.api.Options;
 
 import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+import javax.swing.plaf.metal.MetalTheme;
 import java.awt.*;
 import java.io.*;
 import java.util.*;
@@ -164,17 +167,25 @@ public class Launch {
 
             for (Map.Entry<Object, Object> entry : uidefs.entrySet()) {
                 if (entry.getValue() instanceof ColorUIResource) {
-                    uiprops.put(entry.getKey().toString(), "0x" + Integer.toHexString(((ColorUIResource) entry.getValue()).getRGB()));
+                    uiprops.put(entry.getKey().toString(), "0x" + Integer.toHexString(((ColorUIResource) entry.getValue()).getRGB() - 0xFF000000));
                 }
             }
 
             try {
                 uifile.createNewFile();
-                uiprops.store(new FileWriter(uifile), "uimanager default colour values");
+                uiprops.store(new FileWriter(uifile), " uimanager default colour values");
             } catch (Exception e) {
                 //
             }
             */
+
+            try {
+                CustomMetalTheme cmt = new CustomMetalTheme(null);
+                MetalLookAndFeel.setCurrentTheme(cmt);
+                UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
 
             launchIDE();
         } else { // running from command line.
