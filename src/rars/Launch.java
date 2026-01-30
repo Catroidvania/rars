@@ -14,14 +14,10 @@ import rars.venus.VenusUI;
 import rars.api.Options;
 
 import javax.swing.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Observable;
-import java.util.Observer;
+import javax.swing.plaf.ColorUIResource;
+import java.awt.*;
+import java.io.*;
+import java.util.*;
 
 /*
 Copyright (c) 2003-2012,  Pete Sanderson and Kenneth Vollmar
@@ -159,6 +155,27 @@ public class Launch {
         }
         
         if (gui) {
+            /*
+            // shitty code to get default values
+            File uifile = new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath() + ".properties");
+
+            Properties uiprops = new Properties();
+            UIDefaults uidefs = UIManager.getDefaults();
+
+            for (Map.Entry<Object, Object> entry : uidefs.entrySet()) {
+                if (entry.getValue() instanceof ColorUIResource) {
+                    uiprops.put(entry.getKey().toString(), "0x" + Integer.toHexString(((ColorUIResource) entry.getValue()).getRGB()));
+                }
+            }
+
+            try {
+                uifile.createNewFile();
+                uiprops.store(new FileWriter(uifile), "uimanager default colour values");
+            } catch (Exception e) {
+                //
+            }
+            */
+
             launchIDE();
         } else { // running from command line.
             // assure command mode works in headless environment (generates exception if not)
