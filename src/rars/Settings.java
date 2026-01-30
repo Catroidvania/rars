@@ -210,8 +210,11 @@ public class Settings extends Observable {
      * Number of letters to be matched by editor's instruction guide before popup generated (if popup enabled)
      */
     public static final int EDITOR_POPUP_PREFIX_LENGTH = 6;
+
+    public static final int THEME_PROPERTIES_FILE = 7;
+
     // Match the above by position.
-    private static final String[] stringSettingsKeys = {"ExceptionHandler", "TextColumnOrder", "LabelSortState", "MemoryConfiguration", "CaretBlinkRate", "EditorTabSize", "EditorPopupPrefixLength"};
+    private static final String[] stringSettingsKeys = {"ExceptionHandler", "TextColumnOrder", "LabelSortState", "MemoryConfiguration", "CaretBlinkRate", "EditorTabSize", "EditorPopupPrefixLength", "ThemePropertiesFile"};
 
     /**
      * Last resort default values for String settings;
@@ -219,7 +222,7 @@ public class Settings extends Observable {
      * If you wish to change, do so before instantiating the Settings object.
      * Must match key by list position.
      */
-    private static String[] defaultStringSettingsValues = {"", "0 1 2 3 4", "0", "", "500", "8", "2"};
+    private static String[] defaultStringSettingsValues = {"", "0 1 2 3 4", "0", "", "500", "8", "2", ""};
 
 
     // FONT SETTINGS.  Each array position has associated name.
@@ -684,6 +687,10 @@ public class Settings extends Observable {
         return length;
     }
 
+    public String getThemePropertiesFile() {
+        return stringSettingsValues[THEME_PROPERTIES_FILE];
+    }
+
 
     /**
      * Get the text editor default tab size in characters
@@ -860,6 +867,10 @@ public class Settings extends Observable {
         setStringSetting(EDITOR_POPUP_PREFIX_LENGTH, "" + length);
     }
 
+    public void setThemePropertiesFile(String file) {
+        setStringSetting(THEME_PROPERTIES_FILE, file);
+    }
+
     /**
      * Set editor font to the specified Font object and write it to persistent storage.
      * This method retained for compatibility but replaced by:
@@ -1005,7 +1016,11 @@ public class Settings extends Observable {
         public LookAndFeelColor(String key) {this.key = key; }
         public Color getColor() {
             // Deep copy, because using the color directly in UI caused problems
-            return new Color(UIManager.getLookAndFeel().getDefaults().getColor(key).getRGB());
+            Color c = UIManager.getLookAndFeel().getDefaults().getColor(key);
+            if (c == null) {
+                c = Color.black;
+            }
+            return new Color(c.getRGB());
         }
     }
 
