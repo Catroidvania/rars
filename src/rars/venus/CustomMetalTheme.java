@@ -182,171 +182,206 @@ public class CustomMetalTheme extends DefaultMetalTheme {
 
     // not all values are used by RARS i think
     // might be visible in menus somewhere?
+
+    // outline around selected button
     @Override
     public ColorUIResource getFocusColor() {
         return this.palette.getOrDefault("FocusColor", this.getPrimary2());
     }
 
+    // background behind the text/data segment windows
     @Override
     public ColorUIResource getDesktopColor() {
         return this.palette.getOrDefault("DesktopColor", this.getPrimary2());
     }
 
+    // main background color for all non menu elements
     @Override
     public ColorUIResource getControl() {
         return this.palette.getOrDefault("Control", this.getSecondary3());
     }
 
+    // inactive tab background, table lines, scrollbar accent
     @Override
     public ColorUIResource getControlShadow() {
         return this.palette.getOrDefault("ControlShadow", this.getSecondary2());
     }
 
+    // dark part of window borders, pane borders, button borders, top left bevel lines
     @Override
     public ColorUIResource getControlDarkShadow() {
         return this.palette.getOrDefault("ControlDarkShadow", this.getSecondary1());
     }
 
+    // tab/button/table header text colour, scrollbar triangles
     @Override
     public ColorUIResource getControlInfo() {
         return this.palette.getOrDefault("ControlInfo", this.getBlack());
     }
 
+    // light part of borders, bottom right bevel lines
     @Override
     public ColorUIResource getControlHighlight() {
         return this.palette.getOrDefault("ControlHighlight", this.getWhite());
     }
 
+    // no clue
     @Override
     public ColorUIResource getControlDisabled() {
         return this.palette.getOrDefault("ControlDisabled", this.getSecondary2());
     }
 
+    // dark colour of the little window icons in the bar of the text/data segment windows and file selector folders
     @Override
     public ColorUIResource getPrimaryControl() {
         return this.palette.getOrDefault("PrimaryControl", this.getPrimary3());
     }
 
+    // scrollbar main colour, highlights on the text/data segment window when selected
     @Override
     public ColorUIResource getPrimaryControlShadow() {
         return this.palette.getOrDefault("PrimaryControlShadow", this.getPrimary2());
     }
 
+    // text/data segment window focused border/highlights, also accent colour for the little icons
     @Override
     public ColorUIResource getPrimaryControlDarkShadow() {
         return this.palette.getOrDefault("PrimaryControlDarkShadow", this.getPrimary1());
     }
 
+    // hover tooltip text colour, minor outlines
     @Override
     public ColorUIResource getPrimaryControlInfo() {
         return this.palette.getOrDefault("PrimaryControlInfo", this.getBlack());
     }
 
+    // icon highlight
     @Override
     public ColorUIResource getPrimaryControlHighlight() {
         return this.palette.getOrDefault("PrimaryControlHighlight", this.getWhite());
     }
 
+    // misc text colour, appears on accelerator slider and file chooser
     @Override
     public ColorUIResource getSystemTextColor() {
         return this.palette.getOrDefault("SystemTextColor", this.getBlack());
     }
 
+    // tab name colours, table header and the default colour for addresses in the text/data segment windows
     @Override
     public ColorUIResource getControlTextColor() {
         return this.palette.getOrDefault("ControlTextColor", this.getControlInfo());
     }
 
+    // no idea
     @Override
     public ColorUIResource getInactiveControlTextColor() {
         return this.palette.getOrDefault("InactiveControlTextColor", this.getControlDisabled());
     }
 
+    // no idea
     @Override
     public ColorUIResource getInactiveSystemTextColor() {
         return this.palette.getOrDefault("InactiveSystemTextColor", this.getSecondary2());
     }
 
+    // messages/io pane and help menu text colour
     @Override
     public ColorUIResource getUserTextColor() {
         return this.palette.getOrDefault("UserTextColor", this.getBlack());
     }
 
+    // line highlight in file select and help menu
     @Override
     public ColorUIResource getTextHighlightColor() {
         return this.palette.getOrDefault("TextHighlightColor", this.getPrimary3());
     }
 
+    // text colour for when the above is highlighted
     @Override
     public ColorUIResource getHighlightedTextColor() {
         return this.palette.getOrDefault("HighlightedTextColor", this.getControlTextColor());
     }
 
+    // message/io pane background, text/data segment window address column background
     @Override
     public ColorUIResource getWindowBackground() {
         return this.palette.getOrDefault("WindowBackground", this.getWhite());
     }
 
+    // selected text/data segment window title bar background
     @Override
     public ColorUIResource getWindowTitleBackground() {
         return this.palette.getOrDefault("WindowTitleBackground", this.getPrimary3());
     }
 
+    // selected text/data segment window title bar text colour
     @Override
     public ColorUIResource getWindowTitleForeground() {
         return this.palette.getOrDefault("WindowTitleForeground", this.getBlack());
     }
 
+    // inactive text/data segment window back bg
     @Override
     public ColorUIResource getWindowTitleInactiveBackground() {
         return this.palette.getOrDefault("WindowTitleInactiveBackground", this.getSecondary3());
     }
 
+    // inactive text/data segment window text colour
     @Override
     public ColorUIResource getWindowTitleInactiveForeground() {
         return this.palette.getOrDefault("WindowTitleInactiveForeground", this.getBlack());
     }
 
+    // background colour of the menubar and toolbar
     @Override
     public ColorUIResource getMenuBackground() {
         return this.palette.getOrDefault("MenuBackground", this.getSecondary3());
     }
 
+    // text colour for menu bar and toolbar
     @Override
     public ColorUIResource getMenuForeground() {
         return this.palette.getOrDefault("MenuForeground", this.getBlack());
     }
 
+    // menu option background when hovered
     @Override
     public ColorUIResource getMenuSelectedBackground() {
         return this.palette.getOrDefault("MenuSelectedBackground", this.getPrimary2());
     }
 
+    // text colour of hovered menu option
     @Override
     public ColorUIResource getMenuSelectedForeground() {
         return this.palette.getOrDefault("MenuSelectedForeground", this.getBlack());
     }
 
+    // disabled menu option text colour
     @Override
     public ColorUIResource getMenuDisabledForeground() {
         return this.palette.getOrDefault("MenuDisabledForeground", this.getSecondary2());
     }
 
+    // menu seperator bottom line colour
     @Override
     public ColorUIResource getSeparatorBackground() {
         return this.palette.getOrDefault("SeparatorBackground", this.getWhite());
     }
 
+    // menu seperator top line colour
     @Override
     public ColorUIResource getSeparatorForeground() {
         return this.palette.getOrDefault("SeparatorForeground", this.getPrimary1());
     }
 
+    // menu option shortcut text colour
     @Override
     public ColorUIResource getAcceleratorForeground() {
         return this.palette.getOrDefault("AcceleratorForeground", this.getPrimary1());
     }
 
+    // hovered menu option shortcut text colour
     @Override
     public ColorUIResource getAcceleratorSelectedForeground() {
         return this.palette.getOrDefault("AcceleratorSelectedForeground", this.getBlack());

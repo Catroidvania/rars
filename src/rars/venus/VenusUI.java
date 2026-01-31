@@ -62,7 +62,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 public class VenusUI extends JFrame {
     VenusUI mainUI;
     public JMenuBar menu;
-    private JToolBar toolbar;
+    private JPanel toolbar;
     private MainPane mainPane;
     private RegistersPane registersPane;
     private RegistersWindow registersTab;
@@ -201,7 +201,7 @@ public class VenusUI extends JFrame {
 
         toolbar = this.setUpToolBar();
 
-        JPanel jp = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel jp = new JPanel(new FlowLayout(FlowLayout.CENTER));
         jp.add(toolbar);
         jp.add(RunSpeedPanel.getInstance());
         JPanel center = new JPanel(new BorderLayout());
@@ -715,8 +715,9 @@ public class VenusUI extends JFrame {
      * shared between toolbar icon and corresponding menu item).
      */
 
-    JToolBar setUpToolBar() {
-        JToolBar toolBar = new JToolBar();
+    JPanel setUpToolBar() {
+        JPanel toolBar = new JPanel();
+        toolBar.setLayout(new BoxLayout(toolBar, BoxLayout.LINE_AXIS));
 
         New = new JButton(fileNewAction);
         New.setText("");
@@ -761,6 +762,7 @@ public class VenusUI extends JFrame {
         Help = new JButton(helpHelpAction);
         Help.setText("");
 
+        toolBar.add(Box.createHorizontalGlue());
         toolBar.add(New);
         toolBar.add(Open);
         toolBar.add(Save);
@@ -786,6 +788,7 @@ public class VenusUI extends JFrame {
         toolBar.add(new JToolBar.Separator());
         toolBar.add(Help);
         toolBar.add(new JToolBar.Separator());
+        toolBar.add(Box.createHorizontalGlue());
 
         return toolBar;
     }
