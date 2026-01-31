@@ -12,6 +12,8 @@ import java.util.Properties;
 
 public class CustomMetalTheme extends DefaultMetalTheme {
 
+    // base properties
+    // scroll down a bit to see the rest of the available properties used by the metal LAF
     private final String
             NAME = "Name",
             PRIMARY1 = "PrimaryDarkShadow",
@@ -21,34 +23,50 @@ public class CustomMetalTheme extends DefaultMetalTheme {
             SECONDARY2 = "SecondaryShadow",
             SECONDARY3 = "Secondary",
             WHITE = "White",
-            BLACK = "Black";/*,
-            FOCUSCOlOUR = "focus",
-            DESKTOPCOLOUR = "desktop",
-            WINDOWTITLEBACKGROUND = "activeCaption",
-            WINDOWTITLEFOREGROUND = "activeCaptionText",
-            WINDOWTITLEBORDER = "activeCaptionBorder",
-            WINDOWTITLEINACTIVEBACKGROUND = "inactiveCaption",
-            WINDOWTITLEINACTIVEFOREGROUND = "inactiveCaptionText",
-            WINDOWTITLEINACTIVEBORDER = "inactiveCaptionBorder",
-            WINDOWBACKGROUND = "window",
-            WINDOWBORDER = "windowBorder",
-            WINDOWTEXT = "windowText",
-            MENUBACKGROUND = "menu",
-            MENUFOREGROUND = "menuText",
-            USERTEXTCOLOUR = "textText",
-            TEXTHIGHLIGHTCOLOUR = "textHighlight",
-            HIGHLIGHTEDTEXTCOLOUR = "textHighlightText",
-            INACTIVESYSTEMTEXTCOLOUR = "textInactiveText",
-            CONTROL = "control",
-            CONTROLTEXTCOLOUR = "controlText",
-            CONTROLHIGHLIGHT = "controlHighlight",
-            CONTROLLTHIGHLIGHT = "controlLtHighlight",
-            CONTROLSHADOW = "controlShadow",
-            CONTROLDARKSHADOW = "controlDkShadow",
-            SCROLLBAR = "scrollbar",
-            PRIMARYCONTROL = "info",
-            PRIMARYCONTROLINFO = "infoText"
-    ;*/
+            BLACK = "Black";
+
+    // editor/highlighting properties, matches the names of the settings in the normal RARS menu
+    // not used by metal LAF but loaded directly into the RARS builtin colour system
+    // tried to do it as non destructively as possible so its a bit hacky
+    /*
+    // editor settings
+    EditorBackground
+    EditorForeground
+    EditorLineHighlight
+    EditorSelection
+    EditorCaretColor
+
+    // editor syntax highlighting
+    SyntaxComment
+    SyntaxStringLiteral
+    SyntaxCharacterLiteral
+    SyntaxInstruction
+    SyntaxAssemblerDirective
+    SyntaxRegister
+    SyntaxLabel
+    SyntaxOperator
+    SyntaxInvalid
+    SyntaxMacroParameter
+
+    // table rows and text colour
+    EvenRowBackground
+    EvenRowForeground
+    OddRowBackground
+    OddRowForeground
+
+    // table highlights and text highlighted text colour
+    TextSegmentHighlightBackground
+    TextSegmentHighlightForeground
+
+    TextSegmentDelaySlotHighlightBackground
+    TextSegmentDelaySlotHighlightForeground
+
+    DataSegmentHighlightBackground
+    DataSegmentHighlightForeground
+
+    RegisterHighlightBackground
+    RegisterHighlightForeground
+     */
 
     private String name;
     private HashMap<String, ColorUIResource> palette;
@@ -119,7 +137,7 @@ public class CustomMetalTheme extends DefaultMetalTheme {
 
     @Override
     public String getName() {
-        return name;
+        return this.name;
     }
 
     @Override

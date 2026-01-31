@@ -58,6 +58,7 @@ you should be able to change almost everything with these 8 properties, but you 
 ## known issues
 
 - open files do not update appearance when theme changes, i think this is because their appearance is handled seperately by RARS already
+- i have no idea how the default ocean theme changes tab pane borders without screwing up everything else lmao
 
 ----------------------------------------------
 
