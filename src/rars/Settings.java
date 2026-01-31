@@ -446,6 +446,21 @@ public class Settings extends Observable {
         initialize();
     }
 
+    public void resetToDefaultColours() {
+        for (int i = 0; i < syntaxStyleColorSettingsValues.length; i++) {
+            syntaxStyleColorSettingsValues[i] = defaultSyntaxStyleColorSettingsValues[i];
+            syntaxStyleItalicSettingsValues[i] = defaultSyntaxStyleItalicSettingsValues[i];
+            syntaxStyleBoldSettingsValues[i] = defaultSyntaxStyleBoldSettingsValues[i];
+            saveEditorSyntaxStyle(i);
+        }
+        for (int i = 0; i < colorSettingsValues.length; i++) {
+            colorSettingsValues[i] = defaultColorSettingsValues[i];
+            saveColorSetting(i);
+        }
+        initSystemProviders();
+        initializeEditorSyntaxStyles();
+    }
+
 
     /* **************************************************************************
      This section contains all code related to syntax highlighting styles settings.
@@ -465,17 +480,38 @@ public class Settings extends Observable {
     private static final String SYNTAX_STYLE_BOLD_PREFIX = "SyntaxStyleBold_";
     private static final String SYNTAX_STYLE_ITALIC_PREFIX = "SyntaxStyleItalic_";
 
+    // not the order in SyntaxUtilities?
+    private static final String[] syntaxStyleSettingsKeys = {
+            "SyntaxText", "SyntaxComment", "SyntaxComment2", "SyntaxStringLiteral", "SyntaxCharacterLiteral", "SyntaxLabel",
+            "SyntaxInstruction", "SyntaxAssemblerDirective", "SyntaxRegister", "SyntaxOperator", "SyntaxInvalid", "SyntaxMacroParameter"};
+
     private static String[] syntaxStyleColorSettingsKeys, syntaxStyleBoldSettingsKeys, syntaxStyleItalicSettingsKeys;
     private static String[] defaultSyntaxStyleColorSettingsValues;
     private static boolean[] defaultSyntaxStyleBoldSettingsValues;
     private static boolean[] defaultSyntaxStyleItalicSettingsValues;
 
+    public void setEditorSyntaxStyleByKey(String key, SyntaxStyle syntaxStyle) {
+        for (int i = 0; i < syntaxStyleSettingsKeys.length; i++) {
+            if (syntaxStyleSettingsKeys[i].equals(key)) {
+                setEditorSyntaxStyleByPosition(i, syntaxStyle);
+            }
+        }
+    }
 
     public void setEditorSyntaxStyleByPosition(int index, SyntaxStyle syntaxStyle) {
         syntaxStyleColorSettingsValues[index] = syntaxStyle.getColorAsHexString();
         syntaxStyleItalicSettingsValues[index] = syntaxStyle.isItalic();
         syntaxStyleBoldSettingsValues[index] = syntaxStyle.isBold();
         saveEditorSyntaxStyle(index);
+    }
+
+    public SyntaxStyle getEditorSyntaxStyleByKey(String key) {
+        for (int i = 0; i < syntaxStyleSettingsKeys.length; i++) {
+            if (syntaxStyleSettingsKeys[i].equals(key)) {
+                return getEditorSyntaxStyleByPosition(i);
+            }
+        }
+        return null;
     }
 
     public SyntaxStyle getEditorSyntaxStyleByPosition(int index) {
@@ -1010,15 +1046,37 @@ public class Settings extends Observable {
         initializeEditorSyntaxStyles();
     }
 
+    static class DefaultColor implements SystemColorProvider {
+        private final Color colour;
+        public DefaultColor(String colour) {
+            this.colour = Color.decode(colour);
+        }
+        public Color getColor() {
+            return this.colour;
+        }
+    }
+
     /** Takes a color from the LookAndFeel */
     static class LookAndFeelColor implements SystemColorProvider {
-        private final String key;
-        public LookAndFeelColor(String key) {this.key = key; }
+        private final String key1, key2;
+        public LookAndFeelColor(String key1) {
+            this.key1 = key1;
+            this.key2 = null;
+        }
+        public LookAndFeelColor(String key1, String key2) {
+            this.key1 = key1;
+            this.key2 = key2;
+        }
         public Color getColor() {
             // Deep copy, because using the color directly in UI caused problems
-            Color c = UIManager.getLookAndFeel().getDefaults().getColor(key);
-            if (c == null) {
-                c = Color.black;
+            Color c = UIManager.getColor(key1);
+            if (c == null && key2 != null) {
+                c = UIManager.getColor(key2);
+                if (c == null) {
+                    return new Color(0, 0, 0);
+                }
+            } else {
+                return null;
             }
             return new Color(c.getRGB());
         }
@@ -1064,12 +1122,15 @@ public class Settings extends Observable {
 
     private void initSystemProviders() {
         systemColors = new SystemColorProvider[colorSettingsKeys.length];
-        systemColors[EDITOR_BACKGROUND] = new LookAndFeelColor("TextArea.background");
-        systemColors[EDITOR_FOREGROUND] = new LookAndFeelColor("TextArea.foreground");
-        systemColors[EDITOR_SELECTION_COLOR] = new LookAndFeelColor("TextArea.selectionBackground");
-        systemColors[EDITOR_CARET_COLOR] = new LookAndFeelColor("TextArea.caretForeground");
-        // Mixes based on the system-color of the background and selection-color
-        systemColors[EDITOR_LINE_HIGHLIGHT] = new ColorProviderMix(systemColors[EDITOR_SELECTION_COLOR], systemColors[EDITOR_BACKGROUND], 0.2f);
+        systemColors[EDITOR_BACKGROUND] = new DefaultColor(defaultColorSettingsValues[EDITOR_BACKGROUND]);//new LookAndFeelColor("EditorBackground", "TextArea.background");
+        systemColors[EDITOR_FOREGROUND] = new DefaultColor(defaultColorSettingsValues[EDITOR_FOREGROUND]);//new LookAndFeelColor("EditorForeground", "TextArea.foreground");
+        systemColors[EDITOR_SELECTION_COLOR] = new DefaultColor(defaultColorSettingsValues[EDITOR_SELECTION_COLOR]);//new LookAndFeelColor("EditorSelection", "TextArea.selectionBackground");
+        systemColors[EDITOR_CARET_COLOR] = new DefaultColor(defaultColorSettingsValues[EDITOR_CARET_COLOR]);//new LookAndFeelColor("EditorCaretColor", "TextArea.caretForeground");
+        systemColors[EDITOR_LINE_HIGHLIGHT] = new DefaultColor(defaultColorSettingsValues[EDITOR_LINE_HIGHLIGHT]);//new LookAndFeelColor("EditorLineHighlight");
+        /*if (systemColors[EDITOR_LINE_HIGHLIGHT].getColor() == null) {
+            // Mixes based on the system-color of the background and selection-color
+            systemColors[EDITOR_LINE_HIGHLIGHT] = new ColorProviderMix(systemColors[EDITOR_SELECTION_COLOR], systemColors[EDITOR_BACKGROUND], 0.2f);
+        }*/
         // Mixes based on the set color of the background and selection-color
         // systemColors[EDITOR_LINE_HIGHLIGHT] = new ColorSettingMix(EDITOR_SELECTION_COLOR, EDITOR_BACKGROUND, 0.2f);
     }

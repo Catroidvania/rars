@@ -9,49 +9,51 @@ looks nice
 
 ## how?
 
-make a java .properties file with colours keys, use the [example dark theme](/themes/basicDark.properties) as a base
+make a java .properties file with colours, check out the [example themes](/themes) to use as a base
 
 to change the theme go to settings -> appearance -> select your .properties file
 
+you may need to go into settings -> editor/highlighting and hit apply for some changes to appear as RARS has some builtin customisation that is a bit annoying to work with
+
 ## color region guide
 
-Defaults
+Default (empty properties file)
 
 ![screenshot of rars](/images/default.png)
 
 White
 
-![screenshot of rars](/images/white.png)
+![screenshot of rars](/images/zwhite.png)
 
 Black
 
-![screenshot of rars](/images/black.png)
+![screenshot of rars](/images/zblack.png)
 
-Primary1
+Primary
 
-![screenshot of rars](/images/Primary1.png)
+![screenshot of rars](/images/zprimary.png)
 
-Primary2
+PrimaryShadow
 
-![screenshot of rars](/images/Primary2.png)
+![screenshot of rars](/images/zprimarys.png)
 
-Primary3
+PrimaryDarkShadow
 
-![screenshot of rars](/images/Primary3.png)
+![screenshot of rars](/images/zprimaryds.png)
 
-Secondary1
+Secondary
 
-![screenshot of rars](/images/Secondary1.png)
+![screenshot of rars](/images/zsecondary.png)
 
-Secondary2
+SecondaryShadow
 
-![screenshot of rars](/images/Secondary2.png)
+![screenshot of rars](/images/zsecondarys.png)
 
-Secondary3
+SecondaryDarkShadow
 
-![screenshot of rars](/images/Secondary3.png)
+![screenshot of rars](/images/zsecondaryds.png)
 
-you should be able to change everything with these 8 properties, but you can also see every [supported property](src/rars/venus/CustomMetalTheme.java) here
+you should be able to change almost everything with these 8 properties, but you can also see every [supported property](src/rars/venus/CustomMetalTheme.java) here
 
 ## known issues
 

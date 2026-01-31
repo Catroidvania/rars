@@ -1,8 +1,9 @@
 package rars.venus;
 
 import rars.Globals;
-import rars.venus.editors.jeditsyntax.SyntaxUtilities;
+import rars.venus.editors.jeditsyntax.SyntaxStyle;
 
+import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.metal.DefaultMetalTheme;
 import java.util.HashMap;
@@ -11,23 +12,61 @@ import java.util.Properties;
 
 public class CustomMetalTheme extends DefaultMetalTheme {
 
+    private final String
+            NAME = "Name",
+            PRIMARY1 = "PrimaryDarkShadow",
+            PRIMARY2 = "PrimaryShadow",
+            PRIMARY3 = "Primary",
+            SECONDARY1 = "SecondaryDarkShadow",
+            SECONDARY2 = "SecondaryShadow",
+            SECONDARY3 = "Secondary",
+            WHITE = "White",
+            BLACK = "Black";/*,
+            FOCUSCOlOUR = "focus",
+            DESKTOPCOLOUR = "desktop",
+            WINDOWTITLEBACKGROUND = "activeCaption",
+            WINDOWTITLEFOREGROUND = "activeCaptionText",
+            WINDOWTITLEBORDER = "activeCaptionBorder",
+            WINDOWTITLEINACTIVEBACKGROUND = "inactiveCaption",
+            WINDOWTITLEINACTIVEFOREGROUND = "inactiveCaptionText",
+            WINDOWTITLEINACTIVEBORDER = "inactiveCaptionBorder",
+            WINDOWBACKGROUND = "window",
+            WINDOWBORDER = "windowBorder",
+            WINDOWTEXT = "windowText",
+            MENUBACKGROUND = "menu",
+            MENUFOREGROUND = "menuText",
+            USERTEXTCOLOUR = "textText",
+            TEXTHIGHLIGHTCOLOUR = "textHighlight",
+            HIGHLIGHTEDTEXTCOLOUR = "textHighlightText",
+            INACTIVESYSTEMTEXTCOLOUR = "textInactiveText",
+            CONTROL = "control",
+            CONTROLTEXTCOLOUR = "controlText",
+            CONTROLHIGHLIGHT = "controlHighlight",
+            CONTROLLTHIGHLIGHT = "controlLtHighlight",
+            CONTROLSHADOW = "controlShadow",
+            CONTROLDARKSHADOW = "controlDkShadow",
+            SCROLLBAR = "scrollbar",
+            PRIMARYCONTROL = "info",
+            PRIMARYCONTROLINFO = "infoText"
+    ;*/
+
     private String name;
     private HashMap<String, ColorUIResource> palette;
 
     public CustomMetalTheme(Properties props) {
         super();
         this.palette = new HashMap<>();
-        initDefaults();
+        initDefaultsSteel();
 
         if (props != null && !props.isEmpty()) {
             for (Map.Entry<Object, Object> entry : props.entrySet()) {
-                if (entry.getKey().toString().equals("Name")) {
+                if (entry.getKey().toString().equals(NAME)) {
                     this.name = entry.getValue().toString();
                 }
                 try {
-                    this.palette.put(entry.getKey().toString(), new ColorUIResource(Integer.decode(entry.getValue().toString())));
-                    Globals.getSettings().getPreferences().put(entry.getKey().toString(), entry.getValue().toString());
-                    Globals.getSettings().getPreferences().flush();
+                    ColorUIResource color = new ColorUIResource(Integer.decode(entry.getValue().toString()));
+                    this.palette.put(entry.getKey().toString(), color);
+                    UIManager.put(entry.getKey(), color);
                     //System.out.println(entry.getKey().toString() + ":" + entry.getValue().toString());
                 } catch (Exception e) {
                     // ignore
@@ -36,59 +75,46 @@ public class CustomMetalTheme extends DefaultMetalTheme {
         }
     }
 
-    public void updateEditorHighlights() {
-        /*
-        // these things
-        "EvenRowBackground", "EvenRowForeground", "OddRowBackground", "OddRowForeground",
-            "TextSegmentHighlightBackground", "TextSegmentHighlightForeground",
-            "TextSegmentDelaySlotHighlightBackground", "TextSegmentDelaySlotHighlightForeground",
-            "DataSegmentHighlightBackground", "DataSegmentHighlightForeground",
-            "RegisterHighlightBackground", "RegisterHighlightForeground",
-            "EditorBackground", "EditorForeground", "EditorLineHighlight", "EditorSelection", "EditorCaretColor"
-         */
-        for (Map.Entry<String, ColorUIResource> entry : palette.entrySet()) {
-            if (Globals.getSettings().getColorSettingByKey(entry.getKey()) != null) {
-                Globals.getSettings().setColorSettingByKey(entry.getKey(), entry.getValue());
+    public void updateBuiltinColours() {
+        for (Map.Entry<String, ColorUIResource> entry : this.palette.entrySet()) {
+            Globals.getSettings().setColorSettingByKey(entry.getKey(), entry.getValue());
+            SyntaxStyle style = Globals.getSettings().getEditorSyntaxStyleByKey(entry.getKey());
+            if (style != null) {
+                Globals.getSettings().setEditorSyntaxStyleByKey(entry.getKey(), new SyntaxStyle(entry.getValue(), style.isItalic(), style.isBold()));
             }
         }
-
-        /*
-        int styles = SyntaxUtilities.getDefaultSyntaxStyles().length;
-        for (int i = 0; i < styles; i++) {
-            Globals.getSettings().saveEditorSyntaxStyle(i);
-        }
-        */
-        //Globals.getSettings().getSettingsFromPreferences();
     }
 
-    private void initDefaults() {
-        // metal defaults
-        this.name = "Steel";
-        this.palette.put("Primary1", new ColorUIResource(0x666699));
-        this.palette.put("Primary2", new ColorUIResource(0x9999cc));
-        this.palette.put("Primary3", new ColorUIResource(0xccccff));
-        this.palette.put("Secondary1", new ColorUIResource(0x666666));
-        this.palette.put("Secondary2", new ColorUIResource(0x999999));
-        this.palette.put("Secondary3", new ColorUIResource(0xcccccc));
-        this.palette.put("White", new ColorUIResource(0xFFFFFF));
-        this.palette.put("Black", new ColorUIResource(0x000000));
-
+    private void initDefaultsOcean() {
         // ocean theme defaults
-        /*
         this.name = "Ocean";
-        this.palette.put("Primary1", new ColorUIResource(0x6382BF));
-        this.palette.put("Primary2", new ColorUIResource(0xA3B8CC));
-        this.palette.put("Primary3", new ColorUIResource(0xB8CFE5));
-        this.palette.put("Secondary1", new ColorUIResource(0x7A8A99));
-        this.palette.put("Secondary2", new ColorUIResource(0xB8CFE5));
-        this.palette.put("Secondary3", new ColorUIResource(0xEEEEEE));
-        this.palette.put("White", new ColorUIResource(0xFFFFFF));
-        this.palette.put("Black", new ColorUIResource(0x333333));
+        this.palette.put(PRIMARY1, new ColorUIResource(0x6382BF));
+        this.palette.put(PRIMARY2, new ColorUIResource(0xA3B8CC));
+        this.palette.put(PRIMARY3, new ColorUIResource(0xB8CFE5));
+        this.palette.put(SECONDARY1, new ColorUIResource(0x7A8A99));
+        this.palette.put(SECONDARY2, new ColorUIResource(0xB8CFE5));
+        this.palette.put(SECONDARY3, new ColorUIResource(0xEEEEEE));
+        this.palette.put(WHITE, new ColorUIResource(0xFFFFFF));
+        this.palette.put(BLACK, new ColorUIResource(0x333333));
+
+        // must be overwritten manually in theme if Ocean default is used
         this.palette.put("DesktopColor", new ColorUIResource(0xFFFFFF));
         this.palette.put("InactiveControlTextColor", new ColorUIResource(0x999999));
         this.palette.put("ControlTextColor", new ColorUIResource(0x333333));
         this.palette.put("MenuDisabledForeground", new ColorUIResource(0x999999));
-         */
+    }
+
+    private void initDefaultsSteel() {
+        // metal defaults
+        this.name = "Steel";
+        this.palette.put(PRIMARY1, new ColorUIResource(0x666699));
+        this.palette.put(PRIMARY2, new ColorUIResource(0x9999cc));
+        this.palette.put(PRIMARY3, new ColorUIResource(0xccccff));
+        this.palette.put(SECONDARY1, new ColorUIResource(0x666666));
+        this.palette.put(SECONDARY2, new ColorUIResource(0x999999));
+        this.palette.put(SECONDARY3, new ColorUIResource(0xcccccc));
+        this.palette.put(WHITE, new ColorUIResource(0xFFFFFF));
+        this.palette.put(BLACK, new ColorUIResource(0x000000));
     }
 
     @Override
@@ -98,44 +124,46 @@ public class CustomMetalTheme extends DefaultMetalTheme {
 
     @Override
     protected ColorUIResource getPrimary1() {
-        return this.palette.get("Primary1");
+        return this.palette.get(PRIMARY1);
     }
 
     @Override
     protected ColorUIResource getPrimary2() {
-        return this.palette.get("Primary2");
+        return this.palette.get(PRIMARY2);
     }
 
     @Override
     protected ColorUIResource getPrimary3() {
-        return this.palette.get("Primary3");
+        return this.palette.get(PRIMARY3);
     }
 
     @Override
     protected ColorUIResource getSecondary1() {
-        return this.palette.get("Secondary1");
+        return this.palette.get(SECONDARY1);
     }
 
     @Override
     protected ColorUIResource getSecondary2() {
-        return this.palette.get("Secondary2");
+        return this.palette.get(SECONDARY2);
     }
 
     @Override
     protected ColorUIResource getSecondary3() {
-        return this.palette.get("Secondary3");
+        return this.palette.get(SECONDARY3);
     }
 
     @Override
     protected ColorUIResource getWhite() {
-        return this.palette.get("White");
+        return this.palette.get(WHITE);
     }
 
     @Override
     protected ColorUIResource getBlack() {
-        return this.palette.get("Black");
+        return this.palette.get(BLACK);
     }
 
+    // not all values are used by RARS i think
+    // might be visible in menus somewhere?
     @Override
     public ColorUIResource getFocusColor() {
         return this.palette.getOrDefault("FocusColor", this.getPrimary2());

@@ -74,9 +74,9 @@ public class MainPane extends JTabbedPane {
         Icon editTabIcon = null;//new ImageIcon(Toolkit.getDefaultToolkit().getImage(this.getClass().getResource(Globals.imagesPath+"Edit_tab.jpg")));
         Icon executeTabIcon = null;//new ImageIcon(Toolkit.getDefaultToolkit().getImage(this.getClass().getResource(Globals.imagesPath+"Execute_tab.jpg")));
 
-        this.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+        //this.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
         this.addTab(editTabTitle, editTabIcon, editTabbedPane);
-        this.setForeground(Color.black);
+        // this.setForeground(Color.black);
 
         this.addTab(executeTabTitle, executeTabIcon, executeTab);
 

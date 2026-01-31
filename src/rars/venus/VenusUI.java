@@ -246,6 +246,8 @@ public class VenusUI extends JFrame {
                 SettingsAppearanceAction.setTheme(is);
             } catch (Exception ex) {
                 System.err.println("Could not open theme properties file: " + ex.getMessage());
+                Globals.getSettings().setThemePropertiesFile("");
+                Globals.getSettings().resetToDefaultColours();
             }
         }
 
