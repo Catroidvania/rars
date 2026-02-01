@@ -47,8 +47,8 @@ public class SettingsAppearanceAction extends GuiAction {
             CustomMetalTheme cmt = new CustomMetalTheme(theme);
             MetalLookAndFeel.setCurrentTheme(cmt);
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-            SwingUtilities.updateComponentTreeUI(Globals.getGui());
             cmt.updateBuiltinColours();
+            SwingUtilities.updateComponentTreeUI(Globals.getGui());
             return true;
         } catch (Exception ex) {
             System.err.println("Could not open file: " + ex.getMessage());

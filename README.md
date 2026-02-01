@@ -11,54 +11,17 @@ looks nice
 
 make a java .properties file with colours, check out the [example themes](/themes) to use as a base
 
+you can also see every supported property [here](src/rars/venus/CustomMetalTheme.java) and digging through the Metal LAF source [here](https://github.com/openjdk/jdk/tree/master/src/java.desktop/share/classes/javax/swing/plaf/metal)
+
 to change the theme go to settings -> appearance -> select your .properties file
 
 you may need to go into settings -> editor/highlighting and hit apply for some changes to appear as RARS has some builtin customisation that is a bit annoying to work with
 
-## color region guide
-
-Default (empty properties file)
-
-![screenshot of rars](/images/default.png)
-
-White
-
-![screenshot of rars](/images/zwhite.png)
-
-Black
-
-![screenshot of rars](/images/zblack.png)
-
-Primary
-
-![screenshot of rars](/images/zprimary.png)
-
-PrimaryShadow
-
-![screenshot of rars](/images/zprimarys.png)
-
-PrimaryDarkShadow
-
-![screenshot of rars](/images/zprimaryds.png)
-
-Secondary
-
-![screenshot of rars](/images/zsecondary.png)
-
-SecondaryShadow
-
-![screenshot of rars](/images/zsecondarys.png)
-
-SecondaryDarkShadow
-
-![screenshot of rars](/images/zsecondaryds.png)
-
-you should be able to change almost everything with these 8 properties, but you can also see every [supported property](src/rars/venus/CustomMetalTheme.java) here
-
 ## known issues
 
-- open files do not update appearance when theme changes, i think this is because their appearance is handled seperately by RARS already
-- i have no idea how the default ocean theme changes tab pane borders without screwing up everything else lmao
+- open files do not update appearance in editor when theme changes, i think this is because their appearance is handled seperately by RARS already
+- some UIDefaults values might persist between theme changes if not overwritten
+- blank theme file is not the same as no theme/looks different from base Ocean theme
 
 ----------------------------------------------
 
