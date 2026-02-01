@@ -108,7 +108,7 @@ public class SyntaxUtilities {
         return styles;
     }
 
-    private static Color getThemeColorOrDefault(String key, Color defaultColor) {
+    public static Color getThemeColorOrDefault(String key, Color defaultColor) {
         Color c = UIManager.getColor(key);
         if (c == null) {
             return defaultColor;

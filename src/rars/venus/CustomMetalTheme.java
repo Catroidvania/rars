@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.plaf.BorderUIResource;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.metal.DefaultMetalTheme;
+import javax.swing.plaf.metal.OceanTheme;
 import java.awt.*;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -14,7 +15,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-public class CustomMetalTheme extends DefaultMetalTheme {
+// we want the Ocean scrollbars and slider thing
+public class CustomMetalTheme extends OceanTheme {//DefaultMetalTheme {
 
     // base properties
     // scroll down a bit to see the rest of the available properties used by the metal LAF
@@ -103,14 +105,14 @@ public class CustomMetalTheme extends DefaultMetalTheme {
         }
     }
 
-    // mostly copied from OceanTheme, if the gradient stuff is documented anywhere hell if i know
+    // mostly copied from OceanTheme
     public void addCustomEntriesToTable(UIDefaults table) {
         for (Map.Entry<String, ColorUIResource> entry : palette.entrySet()) {
                 UIManager.put(entry.getKey(), entry.getValue());
         }
 
         UIDefaults.LazyValue focusBorder = t ->
-                new BorderUIResource.LineBorderUIResource(this.getPrimary1());
+                new BorderUIResource.LineBorderUIResource(this.getPrimary1(), 1);
 
         // used by MetalUtils.gradientPainter which is a strange and fickle beast
         List<?> buttonGradient = Arrays.asList(
@@ -136,49 +138,59 @@ public class CustomMetalTheme extends DefaultMetalTheme {
 
         Object[] defaults = new  Object[] {
                 "Button.gradient", buttonGradient,
-                "Button.rollover", Boolean.TRUE,
-                "Button.toolBarBorderBackground", this.getInactiveControlTextColor(),
-                "Button.disabledToolBarBorderBackground", this.getBlack(),
-                "CheckBox.rollover", Boolean.TRUE,
                 "CheckBox.gradient", buttonGradient,
                 "CheckBoxMenuItem.gradient", buttonGradient,
-                "Label.disabledForeground", this.getInactiveControlTextColor(),
-                "Menu.opaque", Boolean.FALSE,
                 "MenuBar.gradient", menuGradient,
-                "MenuBar.borderColor", this.getBlack(),
                 "InternalFrame.activeTitleGradient", buttonGradient,
-                "List.focusCellHighlightBorder", focusBorder,
                 "RadioButton.gradient", buttonGradient,
-                "RadioButton.rollover", Boolean.TRUE,
                 "RadioButtonMenuItem.gradient", buttonGradient,
                 "ScrollBar.gradient", buttonGradient,
-                "Slider.altTrackColor", this.getSecondary2(),
                 "Slider.gradient", sliderGradient,
                 "Slider.focusGradient", sliderGradient,
-                "SplitPane.oneTouchButtonsOpaque", Boolean.FALSE,
-                "SplitPane.dividerFocusColor", this.getPrimary2(),
                 "TabbedPane.gradient", buttonGradient,
-                "TabbedPane.borderHightlightColor", this.getPrimary2(),
+                "ToggleButton.gradient", buttonGradient,
+
+                // want ocean style tabs
+                "TabbedPane.borderHightlightColor", this.getPrimary3(),
                 "TabbedPane.contentAreaColor", this.getPrimary2(),
                 "TabbedPane.contentBorderInsets", new Insets(4, 2, 3, 3),
                 "TabbedPane.selected", this.getPrimary2(),
+                "TabbedPane.shadow", this.getPrimary2(),
+                "TabbedPane.darkShadow", this.getPrimary1(),
                 "TabbedPane.tabAreaBackground", this.getWhite(),
                 "TabbedPane.tabAreaInsets", new Insets(2, 2, 0, 6),
                 "TabbedPane.unselectedBackground", this.getSecondary2(),
+
+                // show gradient behind menubar options
+                "Menu.opaque", Boolean.FALSE,
+
+                // selection borders
+                "List.focusCellHighlightBorder", focusBorder,
                 "Table.focusCellHighlightBorder", focusBorder,
-                "Table.gridColor", this.getSecondary1(),
-                "TableHeader.focusCellBackground", this.getSecondary2(),
-                "ToggleButton.gradient", buttonGradient,
-                "ToolBar.borderColor", this.getWhite(),
-                "ToolBar.isRollover", Boolean.TRUE,
-                "Tree.selectionBorderColor", this.getPrimary1(),
-                "Tree.dropLineColor", this.getPrimary1(),
-                "Table.dropLineColor", this.getPrimary1(),
-                "Table.dropLineShortColor", this.getBlack(),
-                "Table.dropCellBackground", this.getPrimary3(),
-                "Tree.dropCellBackground", this.getPrimary3(),
-                "List.dropCellBackground", this.getPrimary3(),
-                "List.dropLineColor", this.getPrimary1()
+
+                // you can set these yourself
+                //"Button.rollover", Boolean.TRUE,
+                //"Button.toolBarBorderBackground", this.getInactiveControlTextColor(),
+                //"Button.disabledToolBarBorderBackground", this.getBlack(),
+                //"CheckBox.rollover", Boolean.TRUE,
+                //"Label.disabledForeground", this.getInactiveControlTextColor(),
+                //"MenuBar.borderColor", this.getBlack(),
+                //"List.dropCellBackground", this.getPrimary3(),
+                //"List.dropLineColor", this.getPrimary1()
+                //"RadioButton.rollover", Boolean.TRUE,
+                //"Slider.altTrackColor", this.getSecondary2(),
+                //"SplitPane.oneTouchButtonsOpaque", Boolean.FALSE,
+                //"SplitPane.dividerFocusColor", this.getPrimary2(),
+                //"ToolBar.borderColor", this.getWhite(),
+                //"ToolBar.isRollover", Boolean.TRUE,
+                //"Tree.selectionBorderColor", this.getPrimary1(),
+                //"Tree.dropLineColor", this.getPrimary1(),
+                //"TableHeader.focusCellBackground", this.getSecondary2(),
+                //"Table.gridColor", this.getSecondary1(),
+                //"Table.dropLineColor", this.getPrimary1(),
+                //"Table.dropLineShortColor", this.getBlack(),
+                //"Table.dropCellBackground", this.getPrimary3(),
+                //"Tree.dropCellBackground", this.getPrimary3(),
         };
 
         table.putDefaults(defaults);
@@ -207,7 +219,7 @@ public class CustomMetalTheme extends DefaultMetalTheme {
 
     private void initDefaultsOcean() {
         // ocean theme defaults
-        this.name = "Ocean";
+        this.name = "Fauxcean";
         this.palette.put(PRIMARY1, new ColorUIResource(0x6382BF));
         this.palette.put(PRIMARY2, new ColorUIResource(0xA3B8CC));
         this.palette.put(PRIMARY3, new ColorUIResource(0xB8CFE5));
@@ -218,10 +230,10 @@ public class CustomMetalTheme extends DefaultMetalTheme {
         this.palette.put(BLACK, new ColorUIResource(0x333333));
 
         // must be overwritten manually in theme if Ocean default is used
-        this.palette.put("DesktopColor", new ColorUIResource(0xFFFFFF));
-        this.palette.put("InactiveControlTextColor", new ColorUIResource(0x999999));
-        this.palette.put("ControlTextColor", new ColorUIResource(0x333333));
-        this.palette.put("MenuDisabledForeground", new ColorUIResource(0x999999));
+        //this.palette.put("DesktopColor", new ColorUIResource(0xFFFFFF));
+        //this.palette.put("InactiveControlTextColor", new ColorUIResource(0x999999));
+        //this.palette.put("ControlTextColor", new ColorUIResource(0x333333));
+        //this.palette.put("MenuDisabledForeground", new ColorUIResource(0x999999));
     }
 
     private void initDefaultsSteel() {

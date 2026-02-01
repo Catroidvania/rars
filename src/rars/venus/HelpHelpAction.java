@@ -3,6 +3,8 @@ package rars.venus;
 import rars.Globals;
 import rars.assembler.Directives;
 import rars.riscv.*;
+import rars.util.Binary;
+import rars.venus.editors.jeditsyntax.SyntaxUtilities;
 
 import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
@@ -68,7 +70,7 @@ public class HelpHelpAction extends GuiAction {
     }
 
     // Light gray background color for alternating lines of the instruction lists
-    static Color altBackgroundColor = new Color(0xEE, 0xEE, 0xEE);
+    static Color altBackgroundColor = SyntaxUtilities.getThemeColorOrDefault("EvenRowBackground", SyntaxUtilities.getThemeColorOrDefault("Primary", new Color(0xEE, 0xEE, 0xEE)));
 
     /**
      * Separates Instruction name descriptor from detailed (operation) description
@@ -117,6 +119,7 @@ public class HelpHelpAction extends GuiAction {
         contentPane.add(Box.createRigidArea(new Dimension(0, 5)));
         contentPane.add(closePanel);
         contentPane.setOpaque(true);
+        //contentPane.setBorder(BorderFactory.createRaisedSoftBevelBorder());
         dialog.setContentPane(contentPane);
         //Show it.
         dialog.setSize(this.getSize());
@@ -188,7 +191,13 @@ public class HelpHelpAction extends GuiAction {
     // Set up MIPS help tab.  Most contents are generated from instruction set info.
     private JPanel createHelpInfoPanel() {
         JPanel helpInfo = new JPanel(new BorderLayout());
-        String helpRemarksColor = "CCFF99";
+        Color helpRemarksBg = SyntaxUtilities.getThemeColorOrDefault(
+                "HelpBackground",
+                SyntaxUtilities.getThemeColorOrDefault("Primary", Color.decode("#CCFF99")));
+        String helpRemarksColor = Binary.intToHexString(
+                helpRemarksBg.getRed() << 16 |
+                    helpRemarksBg.getGreen() << 8 |
+                    helpRemarksBg.getBlue());
         // Introductory remarks go at the top as a label
         // TODO: update this to consider 12 and 20 bit numbers rather than 16
         String helpRemarks =
@@ -245,7 +254,7 @@ public class HelpHelpAction extends GuiAction {
         // Original code:         mipsHelpInfo.add(new JLabel(helpRemarks, JLabel.CENTER), BorderLayout.NORTH);
         JLabel helpRemarksLabel = new JLabel(helpRemarks, JLabel.CENTER);
         helpRemarksLabel.setOpaque(true);
-        helpRemarksLabel.setBackground(Color.decode("0x" + helpRemarksColor));
+        helpRemarksLabel.setBackground(helpRemarksBg);
         JScrollPane operandsScrollPane = new JScrollPane(helpRemarksLabel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                 JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         helpInfo.add(operandsScrollPane, BorderLayout.NORTH);

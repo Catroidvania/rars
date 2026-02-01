@@ -459,7 +459,7 @@ public class EditPane extends JPanel implements Observer {
      * @param p Point object with x-y (column, line number) coordinates of cursor
      */
     public void displayCaretPosition(Point p) {
-        caretPositionLabel.setText("Line: " + p.y + " Column: " + p.x);
+        caretPositionLabel.setText(" Line: " + p.y + " Column: " + p.x);
     }
 
     private static final char newline = '\n';
