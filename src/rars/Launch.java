@@ -13,12 +13,12 @@ import rars.util.MemoryDump;
 import rars.venus.VenusUI;
 
 import javax.swing.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintStream;
+import javax.swing.plaf.ColorUIResource;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Properties;
 
 /*
 Copyright (c) 2003-2012,  Pete Sanderson and Kenneth Vollmar
@@ -156,8 +156,8 @@ public class Launch {
         }
         
         if (gui) {
-            /*
             // shitty code to get default values
+            /*
             File uifile = new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath() + ".properties");
 
             Properties uiprops = new Properties();
