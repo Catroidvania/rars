@@ -46,6 +46,7 @@ public class Editor {
     private VenusUI mainUI;
     private EditTabbedPane editTabbedPane;
     private String mainUIbaseTitle;
+    private String titleExtra;
     /* number of times File->New has been selected.  Used to generate
      * default filename until first Save or Save As.
      */
@@ -75,6 +76,10 @@ public class Editor {
     // TODO: this doesn't really fit here, it doesn't interact with the GUI
     public String[] getOpenFilePaths() {
         return editTabbedPane.getOpenFilePaths();
+    }
+
+    public EditTabbedPane getEditTabbedPane() {
+        return this.editTabbedPane;
     }
 
     /**
@@ -157,6 +162,15 @@ public class Editor {
     }
 
 
+    public String getTitleExtra() {
+        return this.titleExtra;
+    }
+
+    public void setTitleExtra(String te) {
+        this.titleExtra = te;
+    }
+
+
     /**
      * Places name of file currently being edited into its edit tab and
      * the application's title bar.  The edit tab will contain only
@@ -172,12 +186,16 @@ public class Editor {
      * @param status Edit status of file.  See FileStatus static constants.
      */
     public void setTitle(String path, String name, int status) {
-        if (status == FileStatus.NO_FILE || name == null || name.length() == 0) {
-            mainUI.setTitle(mainUIbaseTitle);
+        String baseTitle = mainUIbaseTitle;
+        if (titleExtra != null && !titleExtra.isEmpty()) {
+            baseTitle += " " + titleExtra;
+        }
+        if (status == FileStatus.NO_FILE || name == null || name.isEmpty()) {
+            mainUI.setTitle(baseTitle);
         } else {
             String edited = (status == FileStatus.NEW_EDITED || status == FileStatus.EDITED) ? "*" : " ";
             String titleName = (status == FileStatus.NEW_EDITED || status == FileStatus.NEW_NOT_EDITED) ? name : path;
-            mainUI.setTitle(titleName + edited + " - " + mainUIbaseTitle);
+            mainUI.setTitle(titleName + edited + " - " + baseTitle);
             editTabbedPane.setTitleAt(editTabbedPane.getSelectedIndex(), name + edited);
         }
     }

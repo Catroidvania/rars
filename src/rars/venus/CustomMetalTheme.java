@@ -27,7 +27,8 @@ public class CustomMetalTheme extends DefaultMetalTheme {
             SECONDARY2 = "SecondaryShadow",
             SECONDARY3 = "Secondary",
             WHITE = "White",
-            BLACK = "Black";
+            BLACK = "Black",
+            TITLESPLASH = "Splash";
 
     // editor/highlighting properties, matches the names of the settings in the normal RARS menu
     // not used by metal LAF but loaded directly into the RARS builtin colour system
@@ -72,7 +73,7 @@ public class CustomMetalTheme extends DefaultMetalTheme {
     RegisterHighlightForeground
      */
 
-    private String name;
+    private String name, splash;
     private HashMap<String, ColorUIResource> palette;
 
     public CustomMetalTheme(Properties props) {
@@ -84,6 +85,11 @@ public class CustomMetalTheme extends DefaultMetalTheme {
             for (Map.Entry<Object, Object> entry : props.entrySet()) {
                 if (entry.getKey().toString().equals(NAME)) {
                     this.name = entry.getValue().toString();
+                    continue;
+                }
+                if (entry.getKey().toString().equals(TITLESPLASH)) {
+                    this.splash = entry.getValue().toString();
+                    continue;
                 }
                 try {
                     ColorUIResource color = new ColorUIResource(Integer.decode(entry.getValue().toString()));
@@ -146,7 +152,7 @@ public class CustomMetalTheme extends DefaultMetalTheme {
                 "RadioButton.rollover", Boolean.TRUE,
                 "RadioButtonMenuItem.gradient", buttonGradient,
                 "ScrollBar.gradient", buttonGradient,
-                "Slider.altTrackColor", this.getSecondary2(), // or s2?
+                "Slider.altTrackColor", this.getSecondary2(),
                 "Slider.gradient", sliderGradient,
                 "Slider.focusGradient", sliderGradient,
                 "SplitPane.oneTouchButtonsOpaque", Boolean.FALSE,
@@ -185,6 +191,17 @@ public class CustomMetalTheme extends DefaultMetalTheme {
             if (style != null) {
                 Globals.getSettings().setEditorSyntaxStyleByKey(entry.getKey(), new SyntaxStyle(entry.getValue(), style.isItalic(), style.isBold()));
             }
+        }
+        if (this.splash != null) {
+            Globals.getGui().getEditor().setTitleExtra(this.splash);
+        } else {
+            Globals.getGui().getEditor().setTitleExtra(this.name);
+        }
+        EditPane ep = Globals.getGui().getEditor().getEditTabbedPane().getCurrentEditTab();
+        if (ep == null) {
+            Globals.getGui().getEditor().setTitle("", "", FileStatus.NO_FILE);
+        } else {
+            Globals.getGui().getEditor().getEditTabbedPane().updateTitles(ep);
         }
     }
 

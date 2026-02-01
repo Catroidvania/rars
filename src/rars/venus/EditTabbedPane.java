@@ -479,7 +479,7 @@ public class EditTabbedPane extends JTabbedPane {
     // Handy little utility to update the title on the current tab and the frame title bar
     // and also to update the MARS menu state (controls which actions are enabled).
     // DPS 9-Aug-2011
-    private void updateTitles(EditPane editPane) {
+    public void updateTitles(EditPane editPane) {
         editor.setTitle(editPane.getPathname(), editPane.getFilename(), editPane.getFileStatus());
         boolean assembled = FileStatus.isAssembled();
         editPane.updateStaticFileStatus(); //  for legacy code that depends on the static FileStatus (pre 4.0)
