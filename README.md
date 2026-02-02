@@ -9,18 +9,21 @@ looks nice
 
 ## how?
 
-make a java .properties file with colours, check out the [example themes](/themes) to use as a base
+make a java .properties file with colours, check out the [example themes](/themes) for a base
 
-you can also see every supported property [here](src/rars/venus/CustomMetalTheme.java) and digging through the Metal LAF source [here](https://github.com/openjdk/jdk/tree/master/src/java.desktop/share/classes/javax/swing/plaf/metal)
+you can also see a more complete list of properties [here](src/rars/venus/CustomMetalTheme.java)
+and by digging through the Metal LAF source [here](https://github.com/openjdk/jdk/tree/master/src/java.desktop/share/classes/javax/swing/plaf/metal)
+and the basic LAF [here](https://github.com/openjdk/jdk/tree/master/src/java.desktop/share/classes/javax/swing/plaf/basic)
 
 to change the theme go to settings -> appearance -> select your .properties file
 
-you may need to go into settings -> editor/highlighting and hit apply for some changes to appear as RARS has some builtin customisation that is a bit annoying to work with
+you may need to go into settings -> editor and hit apply for some changes to appear as RARS has some builtin customisation that is a bit annoying to work with
+
+if RARS fails to load the theme file on startup it will revert to the default appearance if you want to remove a theme
 
 ## known issues
 
 - open files do not update appearance in editor when theme changes, i think this is because their appearance is handled seperately by RARS already
-- some UIDefaults values might persist between theme changes if not overwritten
 - blank theme file is not the same as no theme/looks different from base Ocean theme
 
 ----------------------------------------------
